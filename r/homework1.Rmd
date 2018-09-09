@@ -39,6 +39,7 @@ names(whas500) <- c(
   "dstat",
   "lenfol",
   "fstat")
+whas500$time_yrs <- whas500$lenfol / 365.25
 whas500$gender <- 
   factor(whas500$gender, levels=0:1,
     labels=c("Male", "Female"))

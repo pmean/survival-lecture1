@@ -8,10 +8,10 @@ ods pdf
  file="/folders/myfolders/survival-lecture1/sas/class1.pdf";
  
 libname survival
-  "/folders/myfolders/survival-lecture1/data";
+  "/folders/myfolders/data";
 
 filename whas100
-  "/folders/myfolders/survival-lecture1/data/wiley/whas100.dat";
+  "/folders/myfolders/data/wiley/whas100.dat";
 
 ** whas100 **;
 
