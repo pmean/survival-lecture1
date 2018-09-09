@@ -31,14 +31,23 @@ names(whas100) <-
     "los", "lenfol", "fstat",
     "age", "gender", "bmi")
 whas100$time_yrs <- whas100$lenfol / 365.25
+whas100$fstat <- 
+  factor(whas100$fstat, levels=0:1,
+    labels=c("Alive", "Dead"))
+whas100$gender <- 
+  factor(whas100$gender, levels=0:1,
+    labels=c("Male", "Female"))
 head(whas100)
+fn <- "../data/whas100.RData"
+save(whas100, file=fn)
 ```
 
 Use the same functions, Surv and survfit to create a Kaplan-Meier curve. This plot is the same as Figure 2.2 in Hosmer, Lemeshow, and May.
 
 ```{r plot-overall-whas100, fig.width=4.5, fig.height=2}
 par(mar=c(2.1, 2.1, 0.6, 0.6))
-whas100_surv <- Surv(whas100$time_yrs, whas100$fstat)
+whas100_surv <- 
+  Surv(whas100$time_yrs, whas100$fstat=="Dead")
 whas100_km <- survfit(whas100_surv~1)
 plot(whas100_km, conf.int=FALSE)
 ```

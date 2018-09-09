@@ -342,28 +342,67 @@ names(whas500) &lt;- c(
   &quot;dstat&quot;,
   &quot;lenfol&quot;,
   &quot;fstat&quot;)
+whas500$gender &lt;- 
+  factor(whas500$gender, levels=0:1,
+    labels=c(&quot;Male&quot;, &quot;Female&quot;))
+whas500$cvd &lt;- 
+  factor(whas500$cvd, levels=0:1,
+    labels=c(&quot;No&quot;, &quot;Yes&quot;))
+whas500$afb &lt;- 
+  factor(whas500$afb, levels=0:1,
+    labels=c(&quot;No&quot;, &quot;Yes&quot;))
+whas500$sho &lt;- 
+  factor(whas500$sho, levels=0:1,
+    labels=c(&quot;No&quot;, &quot;Yes&quot;))
+whas500$cvd &lt;- 
+  factor(whas500$fstat, levels=0:1,
+    labels=c(&quot;No&quot;, &quot;Yes&quot;))
+whas500$chf &lt;- 
+  factor(whas500$chf, levels=0:1,
+    labels=c(&quot;No&quot;, &quot;Yes&quot;))
+whas500$av3 &lt;- 
+  factor(whas500$av3, levels=0:1,
+    labels=c(&quot;No&quot;, &quot;Yes&quot;))
+whas500$miord &lt;- 
+  factor(whas500$miord, levels=0:1,
+    labels=c(&quot;First&quot;, &quot;Recurrent&quot;))
+whas500$mitype &lt;- 
+  factor(whas500$mitype, levels=0:1,
+    labels=c(&quot;Non Q-wave&quot;, &quot;Q-wave&quot;))
+whas500$year &lt;- 
+  factor(whas500$chf, levels=1:3,
+    labels=c(&quot;1997&quot;, &quot;1999&quot;, &quot;2001&quot;))
+whas500$dstat &lt;- 
+  factor(whas500$dstat, levels=0:1,
+    labels=c(&quot;Alive&quot;, &quot;Dead&quot;))
+whas500$fstat &lt;- 
+  factor(whas500$fstat, levels=0:1,
+    labels=c(&quot;Alive&quot;, &quot;Dead&quot;))
 head(whas500)</code></pre>
-<pre><code>##   id age gender hr sysbp diasbp      bmi cvd afb sho chf av3 miord mitype
-## 1  1  83      0 89   152     78 25.54051   1   1   0   0   0     1      0
-## 2  2  49      0 84   120     60 24.02398   1   0   0   0   0     0      1
-## 3  3  70      1 83   147     88 22.14290   0   0   0   0   0     0      1
-## 4  4  70      0 65   123     76 26.63187   1   0   0   1   0     0      1
-## 5  5  70      0 63   135     85 24.41255   1   0   0   0   0     0      1
-## 6  6  70      0 76    83     54 23.24236   1   0   0   0   1     0      0
-##   year  admitdate    disdate      fdate los dstat lenfol fstat
-## 1    1 01/13/1997 01/18/1997 12/31/2002   5     0   2178     0
-## 2    1 01/19/1997 01/24/1997 12/31/2002   5     0   2172     0
-## 3    1 01/01/1997 01/06/1997 12/31/2002   5     0   2190     0
-## 4    1 02/17/1997 02/27/1997 12/11/1997  10     0    297     1
-## 5    1 03/01/1997 03/07/1997 12/31/2002   6     0   2131     0
-## 6    1 03/11/1997 03/12/1997 03/12/1997   1     1      1     1</code></pre>
+<pre><code>##   id age gender hr sysbp diasbp      bmi cvd afb sho chf av3     miord
+## 1  1  83   Male 89   152     78 25.54051  No Yes  No  No  No Recurrent
+## 2  2  49   Male 84   120     60 24.02398  No  No  No  No  No     First
+## 3  3  70 Female 83   147     88 22.14290  No  No  No  No  No     First
+## 4  4  70   Male 65   123     76 26.63187 Yes  No  No Yes  No     First
+## 5  5  70   Male 63   135     85 24.41255  No  No  No  No  No     First
+## 6  6  70   Male 76    83     54 23.24236 Yes  No  No  No Yes     First
+##       mitype year  admitdate    disdate      fdate los dstat lenfol fstat
+## 1 Non Q-wave &lt;NA&gt; 01/13/1997 01/18/1997 12/31/2002   5 Alive   2178 Alive
+## 2     Q-wave &lt;NA&gt; 01/19/1997 01/24/1997 12/31/2002   5 Alive   2172 Alive
+## 3     Q-wave &lt;NA&gt; 01/01/1997 01/06/1997 12/31/2002   5 Alive   2190 Alive
+## 4     Q-wave &lt;NA&gt; 02/17/1997 02/27/1997 12/11/1997  10 Alive    297  Dead
+## 5     Q-wave &lt;NA&gt; 03/01/1997 03/07/1997 12/31/2002   6 Alive   2131 Alive
+## 6 Non Q-wave &lt;NA&gt; 03/11/1997 03/12/1997 03/12/1997   1  Dead      1  Dead</code></pre>
+<pre class="r"><code>fn &lt;- &quot;../data/whas500.RData&quot;
+save(whas500, file=fn)</code></pre>
 <p>Produce a table of counts for fstat.</p>
 <pre class="r"><code>table(whas500$fstat)</code></pre>
 <pre><code>## 
-##   0   1 
-## 285 215</code></pre>
+## Alive  Dead 
+##   285   215</code></pre>
 <p>Draw a Kaplan-Meier plot for overall survival.</p>
-<pre class="r"><code>whas500_surv &lt;- Surv(whas500$lenfol, whas500$fstat)
+<pre class="r"><code>whas500_surv &lt;- 
+  Surv(whas500$lenfol, whas500$fstat==&quot;Dead&quot;)
 whas500_km &lt;- survfit(whas500_surv~1)
 plot(whas500_km, conf.int=FALSE)</code></pre>
 <p><img src="data:image/png;base64,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" width="480" /></p>
@@ -382,10 +421,10 @@ plot(whas500_km, conf.int=FALSE)</code></pre>
 ## 422  NA  NA</code></pre>
 <p>Produce a crosstabulation of fstat and gender. Are you comfortable with the number of deaths in each group?</p>
 <pre class="r"><code>table(whas500$gender, whas500$fstat)</code></pre>
-<pre><code>##    
-##       0   1
-##   0 189 111
-##   1  96 104</code></pre>
+<pre><code>##         
+##          Alive Dead
+##   Male     189  111
+##   Female    96  104</code></pre>
 <p>Draw Kaplan-Meier curves for males and females.</p>
 <pre class="r"><code>whas500_by_gender &lt;- survfit(whas500_surv~whas500$gender)
 plot(whas500_by_gender)</code></pre>
@@ -393,27 +432,27 @@ plot(whas500_by_gender)</code></pre>
 <p>Calculate median survival with confidence intervals for males and females.</p>
 <pre class="r"><code>quantile(whas500_by_gender)</code></pre>
 <pre><code>## $quantile
-##                   25   50   75
-## whas500$gender=0 368 2160   NA
-## whas500$gender=1 174 1317 2353
+##                        25   50   75
+## whas500$gender=Male   368 2160   NA
+## whas500$gender=Female 174 1317 2353
 ## 
 ## $lower
-##                   25   50   75
-## whas500$gender=0 187 1671   NA
-## whas500$gender=1  83  905 2350
+##                        25   50   75
+## whas500$gender=Male   187 1671   NA
+## whas500$gender=Female  83  905 2350
 ## 
 ## $upper
-##                   25   50 75
-## whas500$gender=0 644   NA NA
-## whas500$gender=1 385 1627 NA</code></pre>
+##                        25   50 75
+## whas500$gender=Male   644   NA NA
+## whas500$gender=Female 385 1627 NA</code></pre>
 <p>Calculate the log rank test for males versus females. Interpret your result.</p>
 <pre class="r"><code>survdiff(whas500_surv~whas500$gender)</code></pre>
 <pre><code>## Call:
 ## survdiff(formula = whas500_surv ~ whas500$gender)
 ## 
-##                    N Observed Expected (O-E)^2/E (O-E)^2/V
-## whas500$gender=0 300      111    130.7      2.98      7.79
-## whas500$gender=1 200      104     84.3      4.62      7.79
+##                         N Observed Expected (O-E)^2/E (O-E)^2/V
+## whas500$gender=Male   300      111    130.7      2.98      7.79
+## whas500$gender=Female 200      104     84.3      4.62      7.79
 ## 
 ##  Chisq= 7.8  on 1 degrees of freedom, p= 0.00525</code></pre>
 <p>Interpretation: the p-value is less than 0.05, so you would reject the null hypothesis and conclude that the survival probabilities are different for women versus men.</p>
@@ -432,11 +471,11 @@ age_labels &lt;- c(&quot;&lt;60&quot;, &quot;60-69&quot;, &quot;70-79&quot;, &qu
 whas500$age_group &lt;- cut(whas500$age, age_breaks, age_labels)
 table(whas500$age_group, whas500$fstat)</code></pre>
 <pre><code>##        
-##           0   1
-##   &lt;60   118  20
-##   60-69  67  19
-##   70-79  50  64
-##   &gt;=80   50 110</code></pre>
+##         Alive Dead
+##   &lt;60     118   20
+##   60-69    67   19
+##   70-79    50   64
+##   &gt;=80     50  110</code></pre>
 <p>Draw Kaplan Meier curves for each age group.</p>
 <pre class="r"><code>whas500_km_by_age &lt;- survfit(whas500_surv~whas500$age_group)
 whas500_km_by_age    %&gt;%
