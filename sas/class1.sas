@@ -33,6 +33,32 @@ data survival.whas100;
   time_yrs=lenfol/365.25;
 run;
 
+* It's always a good idea to print the first few
+  observations to see if there are any obvious
+  problems with the data                               ;
+
+proc print
+    data=survival.whas100(obs=10);
+run;
+
+* Always run a count on the censoring variable to
+  make sure you have a reasonable number of events
+  (50 is a good rule of thumb). It is okay if the
+  number of censored observations is smaller than 50 ;
+  
+proc freq
+    data=survival.whas100;
+  tables fstat / nopercent;
+run;
+
+* Also make sure that the range of your time variable
+  is reasonable                                        ;
+  
+proc means
+    data=survival.whas100;
+  var time_yrs;
+run;
+
 * The lifetest procedure produces Kaplan-Meier curves
   and estimates. The notable option suppresses the
   printout of the Kaplan-Meier survival probabilities,
@@ -42,11 +68,11 @@ run;
   The time statement tells SAS what your time variable
   is and what your censoring variable is. The value in
   parentheses is the value indicating censoring         ;
-
-proc lifetest
-    notable
-    plots=survival
-    data=survival.whas100;
+  
+ proc lifetest
+     notable
+     plots=survival
+     data=survival.whas100;
   time time_yrs*fstat(0);
   title "Kaplan-Meier curve for WHAS100 data";
 run;
@@ -67,7 +93,7 @@ proc lifetest
     plots=survival
     data=survival.whas100;
   time time_yrs*fstat(0);
-  strata gender;
+  strata gender / nodetail test=logrank;
   title "Comparison of survival for gender for WHAS100 data";
 run;
 
@@ -84,7 +110,7 @@ proc lifetest
     plots=survival
     data=survival.whas100;
   time time_yrs*fstat(0);
-  strata age(60, 70, 80);
+  strata age(60, 70, 80) / nodetail test=logrank;
   title "Comparison of survival for age groups for WHAS100 data";
 run;
 
