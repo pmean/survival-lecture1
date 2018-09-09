@@ -338,7 +338,7 @@ library(tidyr)</code></pre>
 <div id="kaplan-meier-curve-using-whas100-data" class="section level2">
 <h2>Kaplan-Meier curve using WHAS100 data</h2>
 <p>Let’s look at, WHAS100, a data set first described in Chapter 1 of Hosmer, Lemeshow, and May. Read the data-dictionary-whas100.txt file in the doc subdirectory for information about this data set.</p>
-<pre class="r"><code>fn &lt;- &quot;../data/wiley/whas100.dat&quot; 
+<pre class="r"><code>fn &lt;- &quot;../../data/wiley/whas100.dat&quot; 
 whas100 &lt;- read.table(fn, header = FALSE) 
 names(whas100) &lt;- 
   c(&quot;id&quot;, &quot;admitdate&quot;, &quot;foldate&quot;,
@@ -351,6 +351,10 @@ whas100$fstat &lt;-
 whas100$gender &lt;- 
   factor(whas100$gender, levels=0:1,
     labels=c(&quot;Male&quot;, &quot;Female&quot;))
+age_breaks &lt;- c(0, 59, 69, 79, 99)
+age_labels &lt;- c(&quot;&lt;60&quot;, &quot;60-69&quot;, &quot;70-79&quot;, &quot;&gt;=80&quot;)
+whas100$age_group &lt;- 
+  cut(whas100$age, age_breaks, age_labels)
 head(whas100)</code></pre>
 <pre><code>##   id  admitdate    foldate los lenfol fstat age gender      bmi  time_yrs
 ## 1  1 03/13/1995 03/19/1995   4      6  Dead  65   Male 31.38134 0.0164271
@@ -358,8 +362,15 @@ head(whas100)</code></pre>
 ## 3  3 02/17/1995 10/04/2001   5   2421  Dead  77   Male 27.87892 6.6283368
 ## 4  4 04/07/1995 07/14/1995   9     98  Dead  81 Female 21.47878 0.2683094
 ## 5  5 02/09/1995 05/29/1998   4   1205  Dead  78   Male 30.70601 3.2991102
-## 6  6 01/16/1995 09/11/2000   7   2065  Dead  82 Female 26.45294 5.6536619</code></pre>
-<pre class="r"><code>fn &lt;- &quot;../data/whas100.RData&quot;
+## 6  6 01/16/1995 09/11/2000   7   2065  Dead  82 Female 26.45294 5.6536619
+##   age_group
+## 1     60-69
+## 2      &gt;=80
+## 3     70-79
+## 4      &gt;=80
+## 5     70-79
+## 6      &gt;=80</code></pre>
+<pre class="r"><code>fn &lt;- &quot;../../data/whas100.RData&quot;
 save(whas100, file=fn)</code></pre>
 <p>Use the same functions, Surv and survfit to create a Kaplan-Meier curve. This plot is the same as Figure 2.2 in Hosmer, Lemeshow, and May.</p>
 <pre class="r"><code>par(mar=c(2.1, 2.1, 0.6, 0.6))
@@ -445,7 +456,8 @@ text(
   km_labels$strata, adj=0)</code></pre>
 <p><img src="data:image/png;base64,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" width="432" /></p>
 <p>You should also consider plotting with the ggplot2 library. The ggplot2 library will produce a reasonable legend, but you can also get ggplot2 to produce labels like the graph above, if you prefer.</p>
-<pre class="r"><code>whas100_km_by_gender &lt;- survfit(whas100_surv~whas100$gender)
+<pre class="r"><code>whas100_km_by_gender &lt;-
+  survfit(whas100_surv~whas100$gender)
 whas100_km_by_gender %&gt;%
   tidy               %&gt;%
   ggplot(aes(time, estimate, color=strata)) +
@@ -477,16 +489,6 @@ whas100_km_by_gender %&gt;%
 ## 
 ##  Chisq= 4  on 1 degrees of freedom, p= 0.0463</code></pre>
 <p>You cannot use a continuous variable like age with the log rank test. When you need to see how a continuous variable affects survival, split the continuous variable into discrete intervals.</p>
-<pre class="r"><code>age_breaks &lt;- c(0, 59, 69, 79, 99)
-age_labels &lt;- c(&quot;&lt;60&quot;, &quot;60-69&quot;, &quot;70-79&quot;, &quot;&gt;=80&quot;)
-whas100$age_group &lt;- cut(whas100$age, age_breaks, age_labels)
-table(whas100$age_group, whas100$fstat)</code></pre>
-<pre><code>##        
-##         Alive Dead
-##   &lt;60      17    8
-##   60-69    16    7
-##   70-79     8   14
-##   &gt;=80      8   22</code></pre>
 <pre class="r"><code>whas100_km_by_age &lt;- survfit(whas100_surv~whas100$age_group)
 whas100_km_by_age    %&gt;%
   tidy               %&gt;%
@@ -506,7 +508,7 @@ whas100_km_by_age    %&gt;%
 ##  Chisq= 15.6  on 3 degrees of freedom, p= 0.00139</code></pre>
 <p>For data like this, a test for trend would be better. You can find such a test in the survMisc package.</p>
 <p>Save everything for possible re-use.</p>
-<pre class="r"><code>save.image(&quot;../data/class1.RData&quot;)</code></pre>
+<pre class="r"><code>save.image(&quot;../../data/class1.RData&quot;)</code></pre>
 </div>
 
 

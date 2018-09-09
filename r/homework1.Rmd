@@ -14,7 +14,7 @@ library(survival)
 Read in the WHAS500 data set.
 
 ```{r read}
-fn <- "../data/wiley/whas500.dat"
+fn <- "../../data/wiley/whas500.dat"
 whas500 <- read.table(fn, header=FALSE, as.is=TRUE)
 names(whas500) <- c(
   "id",
@@ -76,7 +76,7 @@ whas500$fstat <-
   factor(whas500$fstat, levels=0:1,
     labels=c("Alive", "Dead"))
 head(whas500)
-fn <- "../data/whas500.RData"
+fn <- "../../data/whas500.RData"
 save(whas500, file=fn)
 ```
 
@@ -356,7 +356,7 @@ km
 Save everything for possible re-use.
 
 ```{r save-everything}
-save.image("../data/homework1.RData")
+save.image("../../data/homework1.RData")
 ```
 
 Well, that was a lot of work, but it was worth it.

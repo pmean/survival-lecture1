@@ -340,7 +340,7 @@ library(tidyr)</code></pre>
 <h2>Fruit fly data (round 1)</h2>
 <p>The fly1 data set is intended to illustrate how easy it would be for you to estimate a survival curve if you had no censoring. For a brief overview of this data, refer to data-dictionary-fly1in the doc folder.</p>
 <p>To get the program to work properly, you need a variable that equals one for every observation, since every observation represents a time at death rather than a censoring time.</p>
-<pre class="r"><code>fn &lt;- &quot;../data/fly1.txt&quot;
+<pre class="r"><code>fn &lt;- &quot;../../data/fly1.txt&quot;
 fly1 &lt;- read.table(fn, header=FALSE)
 names(fly1) &lt;- &quot;time&quot;
 print(fly1)</code></pre>
@@ -384,7 +384,7 @@ print(fly1_km)</code></pre>
 <div id="fruit-fly-data-round-2" class="section level2">
 <h2>Fruit fly data (round 2)</h2>
 <p>The fly2 data set illustrates what happens to the data if a scientist accidentally let all the flies still alive at day 70 escape.</p>
-<pre class="r"><code>fn &lt;- &quot;../data/fly2.txt&quot;
+<pre class="r"><code>fn &lt;- &quot;../../data/fly2.txt&quot;
 fly2 &lt;- read.table(fn, header=FALSE)
 names(fly2) &lt;- c(&quot;time&quot;, &quot;censor&quot;)
 print(fly2)</code></pre>
@@ -427,7 +427,7 @@ print(fly2_km)</code></pre>
 <div id="fruit-fly-data-round-3" class="section level2">
 <h2>Fruit fly data (round 3)</h2>
 <p>The fly3 data set illustrates what happens to the data if a scientist accidentally let some (but not all) of the flies escape at day 70.</p>
-<pre class="r"><code>fn &lt;- &quot;../data/fly3.txt&quot;
+<pre class="r"><code>fn &lt;- &quot;../../data/fly3.txt&quot;
 fly3 &lt;- read.table(fn, header=FALSE)
 names(fly3) &lt;- c(&quot;time&quot;, &quot;censor&quot;)
 print(fly3)</code></pre>
@@ -472,7 +472,7 @@ print(fly3_km)</code></pre>
 <p>Table 2.1 of Hosmer, Lemeshow, and May has a very small data set that you can use to calculate the Kaplan-Meier curve by hand. This code shows how R software would generate the graph, just so you can double check your work.</p>
 <p>In R, you create a survival object with the Surv function. This object displays itself with every time listed, but with censored times followed with a plus sign. This is fairly standard shorthand.</p>
 <p>The survfit function takes a survival object and produces information needed to draw one or more Kaplan-Meier curve. Using ~1 tells R that you want a single curve for all of the data.</p>
-<pre class="r"><code>fn &lt;- &quot;../data/table21.txt&quot;
+<pre class="r"><code>fn &lt;- &quot;../../data/table21.txt&quot;
 table21 &lt;- read.csv(fn, header=TRUE)
 print(table21)</code></pre>
 <pre><code>##   subject time censor
@@ -506,7 +506,7 @@ print(table21_fit)</code></pre>
 <p>Read the data-dictionary-whas100.txt file in the doc subdirectory for information about this data set.</p>
 <p>Out of respect for the book’s copyright, I am not reproducing the whas100.txt file in the git repository. See README.md in the main folder or the data dictionary file mentioned above for details about how to download this file.</p>
 <p>The dotted lines in this graph show how to calculated the confidence limits for one of the quantiles.</p>
-<pre class="r"><code>fn &lt;- &quot;../data/wiley/whas100.dat&quot; 
+<pre class="r"><code>fn &lt;- &quot;../../data/wiley/whas100.dat&quot; 
 whas100 &lt;- read.table(fn, header = FALSE) 
 names(whas100) &lt;- 
   c(&quot;id&quot;, &quot;admitdate&quot;, &quot;foldate&quot;,
@@ -920,7 +920,7 @@ segments(q$upper[1], 0.75, 0, 0.75, lty=&quot;dotted&quot;)</code></pre>
 </table>
 <p>The sum of the variances is 1.309 and you compare that to the square of the sum of observed minus expected 0.559504.</p>
 <p>Save everything for possible re-use.</p>
-<pre class="r"><code>save.image(&quot;../data/supplement1.RData&quot;)</code></pre>
+<pre class="r"><code>save.image(&quot;../../data/supplement1.RData&quot;)</code></pre>
 </div>
 
 

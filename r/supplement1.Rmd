@@ -26,7 +26,7 @@ The fly1 data set is intended to illustrate how easy it would be for you to esti
 To get the program to work properly, you need a variable that equals one for every observation, since every observation represents a time at death rather than a censoring time.
 
 ```{r read-fly1}
-fn <- "../data/fly1.txt"
+fn <- "../../data/fly1.txt"
 fly1 <- read.table(fn, header=FALSE)
 names(fly1) <- "time"
 print(fly1)
@@ -42,7 +42,7 @@ plot(fly1_km, conf.int=FALSE)
 The fly2 data set illustrates what happens to the data if a scientist accidentally let all the flies still alive at day 70 escape.
 
 ```{r read-fly2}
-fn <- "../data/fly2.txt"
+fn <- "../../data/fly2.txt"
 fly2 <- read.table(fn, header=FALSE)
 names(fly2) <- c("time", "censor")
 print(fly2)
@@ -57,7 +57,7 @@ plot(fly2_km, conf.int=FALSE)
 The fly3 data set illustrates what happens to the data if a scientist accidentally let some (but not all) of the flies escape at day 70.
 
 ```{r read-fly3}
-fn <- "../data/fly3.txt"
+fn <- "../../data/fly3.txt"
 fly3 <- read.table(fn, header=FALSE)
 names(fly3) <- c("time", "censor")
 print(fly3)
@@ -76,7 +76,7 @@ In R, you create a survival object with the Surv function. This object displays 
 The survfit function takes a survival object and produces information needed to draw one or more Kaplan-Meier curve. Using ~1 tells R that you want a single curve for all of the data.
 
 ```{r read-table21}
-fn <- "../data/table21.txt"
+fn <- "../../data/table21.txt"
 table21 <- read.csv(fn, header=TRUE)
 print(table21)
 table21_surv <- Surv(table21$time, table21$censor)
@@ -96,7 +96,7 @@ Out of respect for the book's copyright, I am not reproducing the whas100.txt fi
 The dotted lines in this graph show how to calculated the confidence limits for one of the quantiles.
 
 ```{r plot-with-quartile, fig.height=2, fig.width=4.5}
-fn <- "../data/wiley/whas100.dat" 
+fn <- "../../data/wiley/whas100.dat" 
 whas100 <- read.table(fn, header = FALSE) 
 names(whas100) <- 
   c("id", "admitdate", "foldate",
@@ -203,5 +203,5 @@ The sum of the variances is `r sum(df$vi)` and you compare that to the square of
 Save everything for possible re-use.
 
 ```{r save-everything}
-save.image("../data/supplement1.RData")
+save.image("../../data/supplement1.RData")
 ```
