@@ -4,15 +4,15 @@
 
 ** preliminaries **;
 
-ods pdf
- file="/folders/myfolders/survival-lecture1/sas/class1.pdf";
- 
-libname survival
-  "/folders/myfolders/data";
-
 filename whas100
   "/folders/myfolders/data/wiley/whas100.dat";
 
+libname survival
+  "/folders/myfolders/data";
+
+ods pdf
+ file="/folders/myfolders/survival-lecture1/sas/class1.pdf";
+ 
 ** whas100 **;
 
 * Read the whas100.txt file for 

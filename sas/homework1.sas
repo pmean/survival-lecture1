@@ -4,15 +4,14 @@
 
 ** preliminaries **;
 
-ods pdf
-  file="/folders/myfolders/survival-lecture1/sas/homework1.pdf";
+filename whas500
+  "/folders/myfolders/data/wiley/whas500.dat";
 
 libname survival
   "/folders/myfolders/data";
 
-filename whas500
-  "/folders/myfolders/data/wiley/whas500.dat";
-
+ods pdf
+  file="/folders/myfolders/survival-lecture1/sas/homework1.pdf";
 
 data survival.whas500;
   infile whas500 delimiter=' ';
