@@ -68,7 +68,7 @@ whas500$mitype <-
   factor(whas500$mitype, levels=0:1,
     labels=c("Non Q-wave", "Q-wave"))
 whas500$year <- 
-  factor(whas500$chf, levels=1:3,
+  factor(whas500$year, levels=1:3,
     labels=c("1997", "1999", "2001"))
 whas500$dstat <- 
   factor(whas500$dstat, levels=0:1,
